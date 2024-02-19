@@ -9,6 +9,16 @@ class Users extends CI_Controller
 		$this->load->model('User');
 		$this->load->library('form_validation');
 	}
+
+	private function set_validation_rules()
+	{
+		$this->form_validation->set_rules('first_name', 'First Name', 'required');
+        $this->form_validation->set_rules('last_name', 'Last Name', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
+        $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|matches[password]');
+	}
+
 	function index()
 	{
 		$this->load->view('login');
@@ -16,22 +26,17 @@ class Users extends CI_Controller
 
 	function register()
 	{
-		/* Check if POST data is empty */
-		if (empty($_POST)) {
+		if (empty($_POST)) // Check if POST data is empty 
+		{
 			$this->load->view('register');
 			return; // Stop further execution
 		}
 
-		/* Set validation rules */
-        $this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
-        $this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
-        $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|matches[password]');
+		$this->set_validation_rules();
 
 		if ($this->form_validation->run() === FALSE) 
         {
-           	// Validation failed, reload the signup form with validation errors
+           	/* Validation failed, reload the signup form with validation errors */
 			$data['error'] = 'Validation failed. Please check your input.';
 			$this->load->view('register', $data);
 			return; // Stop further execution
@@ -62,6 +67,7 @@ class Users extends CI_Controller
 					'first_name' => $this->input->post('first_name'),
 					'last_name' => $this->input->post('last_name'),
 					'email' => $this->input->post('email'),
+					'user_level' => $this->input->post('user_level'),
 					'password' => $encrypted_password,
 					'salt'=> $salt,
 					'created_at' => date('Y-m-d h:i:a'),
@@ -72,6 +78,64 @@ class Users extends CI_Controller
 			/* Pass success message to the view */
 			$data['success'] = "Registration successful! You can now login.";
 			$this->load->view('register', $data);
+
+			/* Update user level if this is the first user (ID = 1) */
+			$user_id = $this->db->insert_id(); // Get the ID of the inserted user
+			if($user_id === 1)
+			{
+				/* Set user level to 9 for the first user */
+				$this->User->update_user_level($user_id, 9);
+			}
 		}
-	}	
+	}
+
+	function login()
+	{
+		if (empty($_POST)) // Check if POST data is empty
+		{
+			$this->load->view('login');
+			return; // Stop further execution
+		}
+
+		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
+
+		if ($this->form_validation->run() === FALSE) 
+        {
+           	/* Validation failed, reload the signup form with validation errors */
+			$data['error'] = "Invalid credentials. Please try again.";
+			$this->load->view('login', $data);
+			return; // Stop further execution
+        }
+		else
+		{
+			$email = $this->input->post('email');
+			$password = $this->input->post('password');
+
+			/* Check if the user exists with the provided credentials */
+			$user = $this->User->login_user($email, $password);
+
+			if ($user) 
+			{
+				if($user->user_level == 9)
+				{
+					/* If login is successful, load the user dashboard */
+					/* $this->load->view('admin_product_dashboard'); */
+					redirect('dashboard/admin');
+				}
+				else
+				{
+					// $data['user'] = $user;
+					redirect('dashboard');
+				}
+			}
+			else
+			{
+				/* Validation failed, reload the signup form with validation errors */
+				$data['error'] = "Invalid credentials. Please try again.";
+				$this->load->view('login', $data);
+				return; // Stop further execution
+			}
+		}
+	}
 }

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Login</title>
+		<title>Product Dashboard - User</title>
 	</head>
 	<body>
 		<header>
@@ -20,6 +20,18 @@
                     <th>Name</th>
                     <th>Inventory Count</th>
                     <th>Quantity Sold</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <a href="">V88 Cap</a>
+                    <td>100</td>
+                    <td>60</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <a href="">V88 Cap</a>
+                    <td>100</td>
+                    <td>60</td>
                 </tr>
                 <tr>
                     <td>1</td>

@@ -3,12 +3,14 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Register</title>
+        <link rel="stylesheet" href="/assets/register.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+        <title>Register Page</title>
     </head>
     <body>
 		<header>
-			<h1>V88 Merchandise</h1>
-			<a href="/users">Login</a>
+			<h2>V88 Merchandise</h2>
+			<a id="login" href="login">Login</a>
 		</header>
 		<main>
 		<!-- Display error message if present -->
@@ -16,6 +18,7 @@
         {   ?>
             <p style="color: red"><?= $error ?></p>
 <?php   }   ?>
+        <!-- Display success message if present -->
 <?php   	if (isset($success))
         {   ?>
             <p style="color: green"><?= $success ?></p>
@@ -36,7 +39,7 @@
                 <input type="password" name="confirm_password" placeholder="********">
 				<input type="submit" value="Login">
 			</form>
-			<a href="/users">Already have an account? Login</a>
+			<a href="login">Already have an account? Login</a>
 		</main>
 	</body>
 </html>
