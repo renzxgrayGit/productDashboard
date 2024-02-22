@@ -3,21 +3,22 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/assets/edit_product">
-        <title>New Product - Admin</title>
+        <link rel="stylesheet" href="/assets/admin_edit_product.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+        <title>Edit Product - Admin</title>
     </head>
     <body>
         <header>
-            <h1>V88 Merchandise</h1>
-            <h2>Dashboard</h2>
-            <h2>Profile</h2>
-            <a href="/users">Log off</a>
+            <h2 id="logo">V88 Merchandise</h2>
+            <a href="<?= base_url('dashboard/admin') ?>">Dashboard</a>
+            <a href="<?= base_url('user/edit') ?>">Profile</a>
+			<a href="/users">Log off</a>
         </header>
         <main>
             <h1>Edit product #<?= $product['id'] ?></h1>
-            <a href="<?= base_url('dashboard/admin'); ?>">Return to Dashboard</a>
+            <a id="return" href="<?= base_url('dashboard/admin') ?>">Return to Dashboard</a>
             <!-- Display invalid message -->
-<?php   if (isset($invalid))
+<?php   if (isset($invalid))    
         {   ?>
             <p class="invalid"><?= $invalid ?></p>
 <?php   }   ?>

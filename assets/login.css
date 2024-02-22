@@ -11,7 +11,7 @@ header {
     padding: 0 20px;
 }
 
-h2, a{
+header h2, a{
     display: inline-block;
     vertical-align: middle;
 }

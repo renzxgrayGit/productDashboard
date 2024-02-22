@@ -6,6 +6,7 @@ class Products extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('Product');
+		$this->load->model('Review');
 		$this->load->library('form_validation');
 	}
 
@@ -32,17 +33,18 @@ class Products extends CI_Controller
  	function index()
 	{
 		$data['products'] = $this->Product->get_products();
-		$this->load->view('admin_product_dashboard', $data);
+		$this->load->view('admin_dashboard', $data);
 	}
 
 	function user()
 	{
-		$this->load->view('user_product_dashboard');
+		$data['products'] = $this->Product->get_products();
+		$this->load->view('user_dashboard', $data);
 	}
 
 	function new()
 	{
-		$this->load->view('add_new');
+		$this->load->view('admin_add_new');
 	}
 
 	function create()
@@ -53,7 +55,7 @@ class Products extends CI_Controller
 		{
 			/* Validation failed, reload the create form with validation errors */
 			$data['invalid'] = "Invalid adding the product";
-			$this->load->view('add_new', $data);
+			$this->load->view('admin_add_new', $data);
 			return;
 		} 
 		else 
@@ -64,7 +66,7 @@ class Products extends CI_Controller
 
 			/* Successfully added product */
 			$data['success'] = "Successfully added product";
-			$this->load->view('add_new', $data);
+			$this->load->view('admin_add_new', $data);
 			return; // Stop further execution
 		}
  	}
@@ -72,7 +74,7 @@ class Products extends CI_Controller
 	function edit($id)
 	{
 		$data['product'] = $this->Product->get_product_by_id($id);
-		$this->load->view('edit_product', $data);
+		$this->load->view('admin_edit_product', $data);
 	}
 
 	function update($id)
@@ -84,7 +86,7 @@ class Products extends CI_Controller
 			// Validation failed, reload the edit form with validation errors
 			$data['product'] = $this->Product->get_product_by_id($id);
 			$data['invalid'] = "Invalid saving the product";
-			$this->load->view('edit_product', $data);
+			$this->load->view('admin_edit_product', $data);
 			return;
 		} 
 		else 
@@ -96,7 +98,7 @@ class Products extends CI_Controller
 			/* Successfully added product */
 			$data['product'] = $this->Product->get_product_by_id($id);
 			$data['success'] = "Successfully saved new product";
-			$this->load->view('edit_product', $data);
+			$this->load->view('admin_edit_product', $data);
 			return; // Stop further execution
 		}
 	}
@@ -106,7 +108,22 @@ class Products extends CI_Controller
 		$this->Product->delete_product($id);
 		$data['products'] = $this->Product->get_products();
 		$data['success'] = "Successfully deleted";
-		$this->load->view('admin_product_dashboard', $data);
+		$this->load->view('admin_dashboard', $data);
 		return;
 	}
+
+	function show($id)
+    {
+        $data['products'] = $this->Product->get_product_by_id($id);
+        $data['reviews'] = $this->Review->get_reviews($id);
+        $data['replies'] = array(); // Initialize an empty array for replies
+        
+        foreach ($data['reviews'] as $review) 
+		{
+            // Retrieve replies for each review and store them in the replies array
+            $data['replies'][$review['id']] = $this->Review->get_replies($id, $review['id']);
+        }
+
+        $this->load->view('product_information', $data);
+    }
 }

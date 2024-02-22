@@ -17,6 +17,7 @@ header a {
     position: relative;
     left: 850px;
 }
+
 header a:hover {
     text-decoration: underline;
 }
@@ -32,61 +33,57 @@ h1 {
     font-size: 20px;
     margin-bottom: 20px;
 }
-h1 ,#add_new {
+h1 ,#return {
     display: inline-block;
 }
-#add_new {
-    background-color: #333;
+#return {
+    background-color: #307ce4;
     padding: 10px 20px;
     border-radius: 5px;
     position: relative;
-    left: 1070px;
+    left: 1100px;
 }
-#add_new:hover {
-    background-color: #555;
+#return:hover {
+    background-color: #87aaef;
 }
-.success {
-    color: green;
-    margin-top: 5px;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
+form {
+    background-color: #fff;
+    padding: 20px;
     margin-top: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-th, td {
-    border: 1px solid #ccc;
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+input[type="text"],
+input[type="number"] {
+    width: 100%;
     padding: 10px;
-    text-align: left;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
 }
-th {
+input[type="submit"] {
     background-color: #333;
     color: #fff;
-}
-td {
-    background-color: #fff;
-}   
-#edit-button {
-    background-color: #1064fc;
+    padding: 10px 20px;
     border: none;
-    color: #fff;
-    padding: 3px 11px;
     border-radius: 3px;
     cursor: pointer;
-    margin-right: 10px;
-    font-size: 14px;
+    font-size: 16px;
 }
-#edit-button:hover {
-    background-color: #2874fc;
-}  
-#delete-button {
-    background-color: #ff3333;
-    border: none;
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
+input[type="submit"]:hover {
+    background-color: #555;
 }
-#delete-button:hover {
-    background-color: #ff6666;
-}   
+p {
+    margin-top: 5px;
+}
+p.success {
+    color: green;
+}
+p.error {
+    color: red;
+}

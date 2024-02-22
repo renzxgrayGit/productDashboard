@@ -66,4 +66,28 @@ class User extends CI_Model
         /* If user doesn't exist or passwords don't match, return false */
         return false;
     }
+
+    function get_user_level($user_level)
+    {
+        $sql = "SELECT * FROM users WHERE user_level = ?";
+        return $this->db->query($sql, $user_level)->row_array();
+    }
+
+    function get_user_id($user_id)
+    {
+        $sql = "SELECT * FROM users WHERE id = ?";
+        return $this->db->query($sql, $user_id)->row_array();
+    }
+
+    function update_information_model($id, $data)
+    {
+        $sql = "UPDATE users SET email = ?, first_name = ?, last_name = ?, updated_at = ? WHERE id = ?";
+        return $this->db->query($sql, array($data['email'], $data['first_name'], $data['last_name'], $data['updated_at'], $id));    
+    }
+
+    function update_password_model($id, $data)
+    {
+        $sql = "UPDATE users SET password = ?, salt= ?, updated_at = ? WHERE id = ?";
+        return $this->db->query($sql, array($data['password'], $data['salt'], $data['updated_at'], $id));    
+    }
 }

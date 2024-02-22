@@ -45,4 +45,12 @@ class Product extends CI_Model
         $sql = "DELETE FROM products WHERE id = ?";
         return $this->db->query($sql, array($id));
     }
+
+    function create_review($data, $id)
+    {
+        $sql = "INSERT INTO reviews (user_id, review, created_at, updated_at)
+                VALUES (?, ?, ?, ?)";
+
+        $this->db->query($sql, array($id, $data['review'], $data['created_at'], $data['updated_at']));
+    }
 }

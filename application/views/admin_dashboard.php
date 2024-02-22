@@ -9,14 +9,14 @@
 	</head>
 	<body>
 		<header>
-			<h1>V88 Merchandise</h1>
-            <h2>Dashboard</h2>
-            <h2>Profile</h2>
+			<h2 id="logo">V88 Merchandise</h2>
+            <a href="<?= base_url('dashboard/admin') ?>">Dashboard</a>
+            <a href="<?= base_url('user/edit') ?>">Profile</a>
 			<a href="/users">Log off</a>
 		</header>
 		<main>
-            <h1>Manage products</h1>
-            <a href="<?= base_url('products/new'); ?>" id="add_product">Add new</a>
+            <h1 id="manage_products">Manage products</h1>
+            <a id="add_new" href="<?= base_url('products/new'); ?>">Add new</a>
             <!-- Display success message -->
 <?php   if (isset($success))
         {   ?>
